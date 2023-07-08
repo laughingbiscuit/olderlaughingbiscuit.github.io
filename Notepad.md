@@ -25,7 +25,7 @@ an example of a wireframe.
 
 <div id="nnn-demo"></div>
 
-A [suckless](https://suckless.org) recommendation, I mainly use this lightweight file manager during presentations to show directory structures. Usually I just
+A [suckless](https://suckless.org/rocks/) recommendation, I mainly use this lightweight file manager during presentations to show directory structures. Usually I just
 use shell operations to create, move, copy and delete files and directories.
 
 ### Terminal Multiplexer - `tmux`
