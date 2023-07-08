@@ -4,7 +4,7 @@ set -xe
 # if not inside container - run script inside container
 if [ ! -f /.dockerenv ]; then
   docker build -t laughingbiscuit/devenv .
-  docker run -v /var/run/docker.sock:/var/run/docker.sock --net=host -v$(pwd)/target:/root/target/ -it laughingbiscuit/devenv sh /root/run
+  docker run -v /var/run/docker.sock:/var/run/docker.sock --net=host -v$(pwd)/target:/root/target/ -i laughingbiscuit/devenv sh /root/run
 
 # we are in the container - lets run the thing!
 else
