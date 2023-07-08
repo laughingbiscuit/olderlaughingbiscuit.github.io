@@ -1,0 +1,52 @@
+#!/bin/sh
+set -xe
+
+# if not inside container - run script inside container
+if [ ! -f /.dockerenv ]; then
+  docker build -t laughingbiscuit/devenv .
+  docker run -v /var/run/docker.sock:/var/run/docker.sock --net=host -v$(pwd)/target:/root/target/ -it laughingbiscuit/devenv sh /root/run
+
+# we are in the container - lets run the thing!
+else
+  # setup a scratch directory
+  rm -rf target/*
+
+  # start browser in background
+  xvfb-run chromedriver --disable-dev-shm-usage --disable-gpu --no-sandbox --disable-setuid-sandbox &
+  sleep 2
+
+  # run shell scripts
+  cp scripts/*.sh target/
+  (cd target && for FILE in *.sh; do 
+    sh "$FILE" > "$FILE.out" 2>&1
+  done)
+
+  # assert outputs of shell scripts
+  cp scripts/*.test target/
+  (cd target && for FILE in *.test; do 
+    sh "$FILE"
+  done)
+
+  # generate markdown report, including shell outputs if needed
+  cp static/* target/
+  cd target
+
+  TESTED_SCRIPT="$(cat Script.sh.out)" \
+  UNTESTED_SCRIPT="$(cat UntestedScript.sh)" \
+  CALL_DOCKER="$(cat CallDocker.sh.out)" \
+  envsubst < ../Notepad.md > index.md
+
+  for FILE in *.txt; do
+    convert -size 1024x1024 xc:white -font "Noto-Sans-Mono-Regular" -pointsize 12 -fill black \
+    -annotate +15+15 "@$FILE" $FILE.png
+  done
+  mogrify -trim *.png
+
+  plantuml *.uml
+
+
+  # generate html report
+  pandoc index.md --metadata pagetitle="LaughingBiscuit" --shift-heading-level-by=1 --toc -o index.html -H header.html -B before.html -f gfm -f markdown-implicit_figures
+fi
+
+
