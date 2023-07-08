@@ -27,7 +27,7 @@ jobs:
         timeout-minutes: 5
         run: ./run
       - name: Debug
-        run: for FILE in ./target/*; do echo "$FILE"; cat "$FILE"; done
+        run: for FILE in "$(find target/ | tail -n+2 | grep -v \".png$\")"; do echo "$FILE"; cat "$FILE"; done
         if: always()
       - name: Setup Pages
         uses: actions/configure-pages@v3
