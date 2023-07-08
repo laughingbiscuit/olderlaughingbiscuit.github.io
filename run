@@ -34,6 +34,7 @@ else
   TESTED_SCRIPT="$(cat Script.sh.out)" \
   UNTESTED_SCRIPT="$(cat UntestedScript.sh)" \
   CALL_DOCKER="$(cat CallDocker.sh.out)" \
+  HTTPD_SCRIPT="$(cat CallHTTPD.sh)" \
   envsubst < ../Notepad.md > index.md
 
   for FILE in *.txt; do
@@ -47,7 +48,7 @@ else
 
   # generate html report
   pandoc index.md --metadata pagetitle="LaughingBiscuit" \
-    --shift-heading-level-by=1 --toc -o index.html -H header.html -B before.html -A after.html -f gfm -f markdown-implicit_figures
+    --shift-heading-level-by=1 --toc --toc-depth 4 -o index.html -H header.html -B before.html -A after.html -f gfm -f markdown-implicit_figures
 fi
 
 
