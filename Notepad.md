@@ -140,3 +140,7 @@ $CALL_DOCKER
 
 ![](last-screenshot.png)
 
+### Scripting a terminal recording
+
+<div id="scriptrec-demo"></div>
+
