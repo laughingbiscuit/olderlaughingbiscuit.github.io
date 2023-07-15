@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -xe
 
 tmux new -d -s myRecSession
 tmux send-keys -t myRecSession.0 "asciinema rec script.cast" ENTER
