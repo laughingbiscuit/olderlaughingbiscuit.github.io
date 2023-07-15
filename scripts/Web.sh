@@ -12,6 +12,6 @@ SESSION_ID=$(curl localhost:9515/session -d '{
 
 
 sleep 2
-curl -s localhost:9515/session/$SESSION_ID/url -d '{"url":"https://laughingbiscuit.com/"}' >/dev/null
+curl -s localhost:9515/session/$SESSION_ID/url -d '{"url":"https://example.com/"}' >/dev/null
 sleep 2
 curl localhost:9515/session/$SESSION_ID/screenshot | jq -r '.value' | base64 -d > last-screenshot.png

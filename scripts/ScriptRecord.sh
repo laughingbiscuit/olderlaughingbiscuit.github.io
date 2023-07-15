@@ -2,7 +2,7 @@
 set -xe
 
 tmux new -d -s myRecSession
-tmux send-keys -t myRecSession.0 "asciinema rec script.cast" ENTER
+tmux send-keys -t myRecSession.0 "asciinema rec scriptrec.cast" ENTER
 sleep 1
 
 tmux send-keys -t myRecSession.0 "echo "
