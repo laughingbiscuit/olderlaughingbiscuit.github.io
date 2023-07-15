@@ -14,4 +14,6 @@ sleep 1
 tmux send-keys -t myRecSession.0 ENTER
 sleep 1
 tmux send-keys -t myRecSession.0 C-d
+sleep 1
+tmux kill-session myRecSession
 
